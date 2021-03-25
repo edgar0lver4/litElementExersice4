@@ -1,0 +1,15 @@
+{
+  "name": "litElementExersise3",
+  "version": "1.0.0",
+  "description": "Exercise 3",
+  "main": "index.js",
+  "author": "Edgar Adnrei Olvera Velasco",
+  "license": "MIT",
+  "scripts":{
+    "start": "parcel index.html --no-cache --open"
+  },
+  "dependencies": {
+    "lit-element": "^2.4.0",
+    "parcel-bundler": "^1.12.5"
+  }
+}
