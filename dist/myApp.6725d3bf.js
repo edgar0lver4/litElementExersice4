@@ -4240,9 +4240,9 @@ var MyList = /*#__PURE__*/function (_LitElement) {
   _createClass(MyList, [{
     key: "render",
     value: function render() {
-      return (0, _litElement.html)(_templateObject || (_templateObject = _taggedTemplateLiteral(["<div>\n                        <h1 class=\"h1\">", "</h1>\n                        <ul class=\"ul\">\n                        ", "\n                        </ul>\n                    </div>"])), this.title, this.list.length !== 0 ? this.list.map(function (el) {
-        return (0, _litElement.html)(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["<li>", "(", ")</li>"])), el.name, el.year);
-      }) : 'No hay datos');
+      return (0, _litElement.html)(_templateObject || (_templateObject = _taggedTemplateLiteral(["<div>\n                        <h1 class=\"h1\">", "</h1>\n                        <ul class=\"ul\">\n                        ", "\n                        </ul>\n                    </div>"])), this.title, this.list.length === 0 && this.searching === 'false' ? 'Empty list' : this.searching === 'true' && this.list.length === 0 ? 'Cargando datos' : this.list.map(function (el) {
+        return (0, _litElement.html)(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["<li>", "</li>"])), el.title);
+      }));
     }
   }], [{
     key: "styles",
@@ -4258,6 +4258,9 @@ var MyList = /*#__PURE__*/function (_LitElement) {
         },
         list: {
           type: Array
+        },
+        searching: {
+          type: String
         }
       };
     }
@@ -4321,7 +4324,7 @@ var HellowWord = /*#__PURE__*/function (_LitElement) {
   _createClass(HellowWord, [{
     key: "render",
     value: function render() {
-      return (0, _litElement.html)(_templateObject || (_templateObject = _taggedTemplateLiteral(["<div>\n            <my-list title=\"Mis peliculas favoritas\" list=", "></my-list>\n        </div>"])), JSON.stringify(this.list));
+      return (0, _litElement.html)(_templateObject || (_templateObject = _taggedTemplateLiteral(["<div>\n            <my-list title=\"Mis peliculas favoritas\" list=", " searching=", "></my-list>\n        </div>"])), JSON.stringify(this.list), this.searching);
     }
   }], [{
     key: "properties",
@@ -4338,6 +4341,9 @@ var HellowWord = /*#__PURE__*/function (_LitElement) {
         },
         list: {
           type: Array
+        },
+        searching: {
+          type: String
         }
       };
     }
@@ -4392,45 +4398,36 @@ var MyApp = /*#__PURE__*/function (_LitElement) {
 
     _this = _super.call(this);
     _this.list = [];
-    _this.chargedList = [{
-      id: 1,
-      name: 'Your Name',
-      year: 2018
-    }, {
-      id: 2,
-      name: "El gigante de hierro",
-      year: 1995
-    }, {
-      id: 3,
-      name: "Contacto sangriento",
-      year: 1985
-    }, {
-      id: 4,
-      name: "Spirit",
-      year: 2001
-    }, {
-      id: 5,
-      name: "101 Dalmatas",
-      year: 1997
-    }];
+    _this.searching = false;
     return _this;
   }
 
   _createClass(MyApp, [{
     key: "render",
     value: function render() {
-      return (0, _litElement.html)(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n                    <button @click=", " class=\"button button_create\">Create list</button>\n                    <button @click=", " class=\"button button_delete\">Remove list</button>\n                    <hellow-word list=", "></hellow-word>\n        "])), this._createList, this._removeList, JSON.stringify(this.list));
+      return (0, _litElement.html)(_templateObject || (_templateObject = _taggedTemplateLiteral(["<div>TITLE</div>\n                    <button @click=", " class=\"button button_create\">Create list</button>\n                    <button @click=", " class=\"button button_delete\">Remove list</button>\n                    <hellow-word list=", " searching=", "></hellow-word>\n        "])), this._createList, this._removeList, JSON.stringify(this.list), this.searching);
     }
   }, {
     key: "_createList",
     value: function _createList() {
-      this.list = this.chargedList;
-      console.log(list);
+      var _this2 = this;
+
+      var url = 'https://api.themoviedb.org/3/movie/popular?api_key=4ff32b3a95fabacb861ecfa8aa1dfcba';
+      this.searching = true;
+      fetch(url).then(function (res) {
+        return res.json();
+      }).then(function (data) {
+        _this2.list = data.results;
+        _this2.searching = false;
+      }).catch(function (e) {
+        console.log(e);
+      });
     }
   }, {
     key: "_removeList",
     value: function _removeList() {
       this.list = [];
+      this.searching = false;
     }
   }], [{
     key: "properties",
@@ -4441,6 +4438,9 @@ var MyApp = /*#__PURE__*/function (_LitElement) {
         },
         chargedList: {
           type: Array
+        },
+        searching: {
+          type: String
         }
       };
     }
@@ -4483,7 +4483,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50325" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51916" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

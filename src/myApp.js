@@ -6,7 +6,8 @@ class MyApp extends LitElement {
     static get properties(){
         return{
             list:{type:Array},
-            chargedList:{type:Array}
+            chargedList:{type:Array},
+            searching:{type:String}
         }
     }
     static get styles(){
@@ -45,47 +46,31 @@ class MyApp extends LitElement {
     constructor(){
         super();
         this.list = [];
-        this.chargedList = [
-            {
-                id:1, 
-                name:'Your Name',
-                year:2018
-            },
-            {
-                id:2,
-                name:"El gigante de hierro",
-                year:1995
-            },
-            {
-                id:3,
-                name:"Contacto sangriento",
-                year:1985
-            },
-            {
-                id:4,
-                name:"Spirit",
-                year:2001
-            },
-            {
-                id:5,
-                name: "101 Dalmatas",
-                year:1997
-            }
-        ];
+        this.searching = false;
     }
     render(){
-        return html`
+        return html`<div>TITLE</div>
                     <button @click=${this._createList} class="button button_create">Create list</button>
                     <button @click=${this._removeList} class="button button_delete">Remove list</button>
-                    <hellow-word list=${JSON.stringify(this.list)}></hellow-word>
+                    <hellow-word list=${JSON.stringify(this.list)} searching=${this.searching}></hellow-word>
         `;
     }
     _createList(){
-        this.list = this.chargedList;
-        console.log(list);
+        let url = 'https://api.themoviedb.org/3/movie/popular?api_key=4ff32b3a95fabacb861ecfa8aa1dfcba';
+        this.searching = true;
+        fetch(url)
+        .then(res => res.json())
+        .then(data =>{
+            this.list = data.results;
+            this.searching = false;
+        })
+        .catch(e=>{
+            console.log(e);
+        })
     }
     _removeList(){
         this.list = [];
+        this.searching = false;
     }
 }
 customElements.define('my-app',MyApp);

@@ -25,14 +25,15 @@ class MyList extends LitElement {
     static get properties(){
         return{
             title:{type:String},
-            list:{type:Array}
+            list:{type:Array},
+            searching:{type:String}
         }
     }
     render(){
         return html`<div>
                         <h1 class="h1">${this.title}</h1>
                         <ul class="ul">
-                        ${this.list.length !== 0 ? this.list.map(el=>html`<li>${el.name}(${el.year})</li>`) : 'No hay datos'}
+                        ${this.list.length === 0 && this.searching === 'false' ? 'Empty list' : (this.searching === 'true' && this.list.length === 0 ? 'Cargando datos' : this.list.map(el=>html`<li>${el.title}</li>`)) }
                         </ul>
                     </div>`;
     }

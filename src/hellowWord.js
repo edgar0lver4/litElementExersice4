@@ -8,7 +8,8 @@ class HellowWord extends LitElement {
             message:{type:String},
             count:{type:Number},
             messageOutside:{type:String},
-            list:{type:Array}
+            list:{type:Array},
+            searching:{type:String}
         }
     }
     constructor(){
@@ -19,7 +20,7 @@ class HellowWord extends LitElement {
 
     render(){
         return html`<div>
-            <my-list title="Mis peliculas favoritas" list=${ JSON.stringify(this.list) }></my-list>
+            <my-list title="Mis peliculas favoritas" list=${ JSON.stringify(this.list) } searching=${this.searching}></my-list>
         </div>`;
     }
 }
